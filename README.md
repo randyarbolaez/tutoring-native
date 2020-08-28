@@ -10,7 +10,7 @@
 
 ![Screenshot](./screenshots/login-signup-screen.jpeg)
 
-## Add New Animal Screen
+## Add New Tutoring Post Screen
 
 ![Screenshot](./screenshots/add-new-tutoring-post-screen.jpeg)
 

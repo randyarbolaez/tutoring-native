@@ -8,9 +8,9 @@ import * as postActions from "../store/actions/post-actions";
 const Post = () => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const posts = useSelector(state => state.post.searchPosts);
+  const posts = useSelector((state) => state.post.searchPosts);
   const dispatch = useDispatch();
-  const isUserLoggedIn = useSelector(state => state.auth);
+  const isUserLoggedIn = useSelector((state) => state.auth);
 
   const loadPosts = useCallback(async () => {
     setIsRefreshing(true);
@@ -31,8 +31,8 @@ const Post = () => {
       onRefresh={loadPosts}
       refreshing={isRefreshing}
       data={posts}
-      keyExtractor={item => item.id}
-      renderItem={itemData => {
+      keyExtractor={(item) => item.id}
+      renderItem={(itemData) => {
         return (
           <PostCard
             currentUser={isUserLoggedIn}
@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     display: "flex",
-    flexWrap: "wrap"
-  }
+    flexWrap: "wrap",
+  },
 });
 
 export default Post;

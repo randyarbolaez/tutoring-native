@@ -12,34 +12,34 @@ import Colors from "../constants/Colors";
 
 const defaultNavOptions = {
   headerStyle: {
-    backgroundColor: Platform.OS === "android" ? Colors.primaryColor : ""
+    backgroundColor: Platform.OS === "android" ? "#555e69" : "",
   },
-  headerTintColor: Platform.OS === "android" ? "white" : Colors.accentColor
+  headerTintColor: Platform.OS === "android" ? "white" : "#555e69",
 };
 
 const TutoringNavigator = createStackNavigator(
   {
     Tutoring: TutoringScreen,
-    AddTutoring: AddTutoringScreen
+    AddTutoring: AddTutoringScreen,
   },
   {
-    defaultNavigationOptions: defaultNavOptions
+    defaultNavigationOptions: defaultNavOptions,
   }
 );
 
 const AuthNavigator = createStackNavigator(
   {
-    Auth: AuthScreen
+    Auth: AuthScreen,
   },
   {
-    defaultNavigationOptions: defaultNavOptions
+    defaultNavigationOptions: defaultNavOptions,
   }
 );
 
 const MainNavigator = createSwitchNavigator({
   Startup: StartupScreen,
   Auth: AuthNavigator,
-  TutoringBlah: TutoringNavigator
+  TutoringBlah: TutoringNavigator,
 });
 
 export default createAppContainer(MainNavigator);

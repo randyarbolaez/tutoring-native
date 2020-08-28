@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 
 import * as postActions from "../store/actions/post-actions";
 
-const PostCard = props => {
+const PostCard = (props) => {
   const dispatch = useDispatch();
 
   let dateCreated = props.created_at;
@@ -21,13 +21,13 @@ const PostCard = props => {
     "September",
     "October",
     "November",
-    "December"
+    "December",
   ];
   let month = months[d.getMonth()];
   let day = d.getDate();
   let year = d.getFullYear();
 
-  const onHandleDelete = id => {
+  const onHandleDelete = (id) => {
     try {
       dispatch(postActions.deletePost(id));
       props.loadPost();
@@ -53,30 +53,36 @@ const PostCard = props => {
 };
 const styles = StyleSheet.create({
   wrapper: {
-    // display: "flex"
-    backgroundColor: "red",
+    display: "flex",
     margin: "2% 2%",
     boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)",
-    borderRadius: "50%",
+    borderTopEndRadius: "20%",
+    borderColor: "#DB7093",
+    borderWidth: 1,
+    borderBottomColor: "#FFD6C0",
+    borderBottomWidth: 1,
+    borderRightColor: "#FFD6C0",
+    borderRightWidth: 1,
+    borderTopStartRadius: "10%",
+    borderBottomStartRadius: "25%",
+    borderBottomEndRadius: "10%",
     padding: "4%",
-    // width: "20%",
-    backgroundColor: "#E4C1F9",
-    display: "flex",
-    flexDirection: "column"
   },
   title: {
     fontSize: 20,
     textAlign: "center",
-    color: "#FCF6BD"
+    color: "#DB7093",
   },
   description: {
     textAlign: "center",
-    color: "#a3a3a3"
+    color: "#FFB6C1",
   },
   dateMade: {
-    color: "#f1f2eb",
-    textAlign: "center"
-  }
+    color: "#74776B",
+    textAlign: "center",
+    paddingTop: 5,
+    // paddingBottom: 1,
+  },
 });
 
 export default PostCard;

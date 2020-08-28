@@ -5,7 +5,7 @@ import {
   Button,
   TextInput,
   StyleSheet,
-  Platform
+  Platform,
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,9 +17,9 @@ import * as authActions from "../store/actions/auth-actions";
 import * as postActions from "../store/actions/post-actions";
 import Colors from "../constants/Colors";
 
-const TutoringScreen = props => {
+const TutoringScreen = (props) => {
   const [search, setSearch] = useState();
-  let posts = useSelector(state => state.post);
+  let posts = useSelector((state) => state.post);
   const dispatch = useDispatch();
 
   const loadPosts = useCallback(async () => {
@@ -31,7 +31,7 @@ const TutoringScreen = props => {
     setIsRefreshing(false);
   }, [dispatch]);
 
-  const onInputChangeHandler = async value => {
+  const onInputChangeHandler = async (value) => {
     setSearch(value);
     let action = postActions.searchPosts(value, posts);
     try {
@@ -46,7 +46,7 @@ const TutoringScreen = props => {
     props.navigation.setParams({
       logout: () => {
         dispatch(authActions.logout());
-      }
+      },
     });
   }, [dispatch]);
 
@@ -56,10 +56,10 @@ const TutoringScreen = props => {
         style={styles.input}
         type="text"
         value={search}
-        onChangeText={value => {
+        onChangeText={(value) => {
           onInputChangeHandler(value);
         }}
-        placeholder="Tutoring Board"
+        placeholder="Search"
       />
       <View style={styles.container}>
         <Post />
@@ -68,7 +68,7 @@ const TutoringScreen = props => {
   );
 };
 
-TutoringScreen.navigationOptions = navData => {
+TutoringScreen.navigationOptions = (navData) => {
   const logout = navData.navigation.getParam("logout");
   return {
     title: "Tutoring Board",
@@ -93,7 +93,7 @@ TutoringScreen.navigationOptions = navData => {
           }}
         />
       </HeaderButtons>
-    )
+    ),
   };
 };
 
@@ -101,17 +101,18 @@ const styles = StyleSheet.create({
   wrapper: {
     justifyContent: "center",
     alignContent: "center",
-    paddingBottom: "5%"
+    paddingBottom: "7%",
   },
   container: {
-    height: "97%"
+    height: "97%",
   },
   input: {
-    fontSize: 15,
+    marginTop: 25,
+    fontSize: 20,
     textAlign: "center",
-    height: 17,
-    color: "#E4C1F9"
-  }
+    height: 50,
+    color: "#DC143C",
+  },
 });
 
 export default TutoringScreen;

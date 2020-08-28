@@ -8,25 +8,25 @@ export const LOGOUT = "LOGOUT";
 let timer;
 
 export const authenticate = (userId, token, expiryTime) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(setLogoutTimer(expiryTime));
     dispatch({ type: AUTHENTICATE, userId, token });
   };
 };
 
 export const verify = (username, password, isSignUp) => {
-  return async dispatch => {
+  return async (dispatch) => {
     const response = await fetch(
       `${ENV.apiUrl}${isSignUp ? "signup" : "authenticate"}`,
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           username,
-          password
-        })
+          password,
+        }),
       }
     );
 
@@ -63,8 +63,8 @@ const clearLogoutTimer = () => {
   }
 };
 
-const setLogoutTimer = expirationTime => {
-  return dispatch => {
+const setLogoutTimer = (expirationTime) => {
+  return (dispatch) => {
     timer = setTimeout(() => {
       dispatch(logout());
     }, expirationTime);
@@ -77,7 +77,7 @@ const saveDataToStorage = (token, userId, expirationDate) => {
     JSON.stringify({
       token,
       userId,
-      expiryDate: expirationDate.toISOString()
+      expiryDate: expirationDate.toISOString(),
     })
   );
 };

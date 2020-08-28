@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useCallback, useEffect } from "react";
+import React, { useState, useReducer, useCallback } from "react";
 import {
   ScrollView,
   View,
@@ -8,7 +8,7 @@ import {
   StyleSheet,
   ActivityIndicator,
   Alert,
-  TextInput
+  TextInput,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useDispatch } from "react-redux";
@@ -18,53 +18,51 @@ import * as authActions from "../store/actions/auth-actions";
 
 import Colors from "../constants/Colors";
 
-const AuthScreen = props => {
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
+const AuthScreen = (props) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
   const [isSignup, setIsSignup] = useState(true);
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (error) {
-      Alert.alert(
-        "An Error Occurred!",
-        "The function that you are trying to attempt is unavailable.",
-        [{ text: "Okay" }]
-      );
-    }
-  }, [error]);
-
   const authHandler = async () => {
     let action = authActions.verify(username, password, isSignup);
     if (username.length < 3 || password.length < 3) {
       setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 1000);
     }
     if (username == undefined || password == undefined) {
       setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 1000);
     }
     try {
       await dispatch(action);
       props.navigation.navigate("TutoringBlah");
     } catch (err) {
       setError(err);
+      setTimeout(() => {
+        setError(false);
+      }, 1500);
     }
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior="padding"
-      keyboardVerticalOffset={5}
-      style={styles.screen}
-    >
-      <LinearGradient colors={["#FF99C8", "#E4C1F9"]} style={styles.gradient}>
+    <KeyboardAvoidingView behavior="padding" style={styles.screen}>
+      <LinearGradient
+        colors={isSignup ? ["#FF99C8", "#E4C1F9"] : ["#EE82EE", "#DC143C"]}
+        style={styles.gradient}
+      >
         <View style={styles.container}>
           <Text style={styles.title}>
-            Welcome, {isSignup ? "Sign Up" : "Login"}
+            {isSignup ? "Welcome,    Sign Up" : "Welcome Back, Login"}
           </Text>
-          <ScrollView>
+          <View>
             <TextInput
               style={styles.input}
               placeholder="Username"
@@ -75,7 +73,7 @@ const AuthScreen = props => {
               minLength={3}
               autoCapitalize="none"
               errorText="Please enter a valid username."
-              onChangeText={value => setUsername(value)}
+              onChangeText={(value) => setUsername(value)}
               initialValue=""
             />
             <TextInput
@@ -89,30 +87,45 @@ const AuthScreen = props => {
               minLength={3}
               autoCapitalize="none"
               errorText="Please enter a valid password."
-              onChangeText={value => setPassword(value)}
+              onChangeText={(value) => setPassword(value)}
               initialValue=""
             />
-            <View style={styles.buttonContainer}>
-              {isLoading ? (
-                <ActivityIndicator size="small" color={Colors.primary} />
-              ) : (
+            <View style={styles.buttonWrapper}>
+              <View style={styles.buttonContainer}>
+                {isLoading ? (
+                  <ActivityIndicator size="small" color={Colors.primary} />
+                ) : (
+                  <Button
+                    title={isSignup ? "Sign Up" : "Login"}
+                    disabled={username.length < 3 || password.length < 3}
+                    color={Colors.accentColor}
+                    onPress={authHandler}
+                  />
+                )}
+              </View>
+              <View style={styles.buttonContainer}>
                 <Button
-                  title={isSignup ? "Sign Up" : "Login"}
-                  color={Colors.primaryColor}
-                  onPress={authHandler}
+                  title={`Switch to ${isSignup ? "Login" : "Sign Up"}`}
+                  color={Colors.accentColor}
+                  onPress={() => {
+                    setIsSignup((prevState) => !prevState);
+                  }}
                 />
-              )}
+              </View>
             </View>
-            <View style={styles.buttonContainer}>
-              <Button
-                title={`Switch to ${isSignup ? "Login" : "Sign Up"}`}
-                color={Colors.primaryColor}
-                onPress={() => {
-                  setIsSignup(prevState => !prevState);
+            {error && (
+              <Text
+                style={{
+                  ...styles.errorText,
+                  color: `${isSignup ? "#ff0033" : "#FFCCCC"}`,
                 }}
-              />
-            </View>
-          </ScrollView>
+              >
+                {isSignup
+                  ? `'${username}' is taken, be more creative!`
+                  : "Incorrect username or password!"}
+              </Text>
+            )}
+          </View>
         </View>
       </LinearGradient>
     </KeyboardAvoidingView>
@@ -121,19 +134,21 @@ const AuthScreen = props => {
 
 const styles = StyleSheet.create({
   screen: {
-    flex: 1
+    flex: 1,
   },
   gradient: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   title: {
-    fontSize: 50,
+    textAlign: "center",
+    fontSize: 36.8,
     fontWeight: "bold",
-    color: "#FCF6BD"
+    color: "#FCF6BD",
   },
   container: {
+    // transform: [{ rotate: "11deg" }],
     width: "80%",
     maxWidth: 400,
     maxHeight: 400,
@@ -142,16 +157,22 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     shadowColor: "#CCCCCC",
     shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 }
+    shadowOffset: { width: 0, height: 2 },
+  },
+  buttonWrapper: {
+    display: "flex",
+    flexDirection: "row",
+    textAlign: "center",
+    justifyContent: "center",
   },
   buttonContainer: {
-    marginTop: 5,
-    borderRadius: 50,
-    paddingHorizontal: 1,
-    paddingVertical: 3,
-    borderLeftWidth: 1,
-    borderBottomWidth: 1,
-    borderRightWidth: 1
+    marginTop: 10,
+    // borderRadius: 50,
+    // paddingHorizontal: 1,
+    // paddingVertical: 3,
+    // borderLeftWidth: 1,
+    // borderBottomWidth: 1,
+    // borderRightWidth: 1,
     // backgroundColor: "#F7F0FF"
   },
   input: {
@@ -162,13 +183,18 @@ const styles = StyleSheet.create({
     backgroundColor: "#F7F0FF",
     marginTop: 10,
     height: 50,
-    fontSize: 20
-  }
+    fontSize: 20,
+  },
+  errorText: {
+    textAlign: "center",
+    fontSize: 15,
+    fontWeight: "400",
+  },
 });
 
-AuthScreen.navigationOptions = navData => {
+AuthScreen.navigationOptions = (navData) => {
   return {
-    header: null
+    header: null,
     // headerTitle: isSignup ? "Sign Up" : "Login"
   };
 };

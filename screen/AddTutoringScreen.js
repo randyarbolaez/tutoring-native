@@ -5,16 +5,17 @@ import {
   TextInput,
   Button,
   StyleSheet,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Keyboard,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 import * as postActions from "../store/actions/post-actions";
 
-const AddTutoringScreen = props => {
+const AddTutoringScreen = (props) => {
   const dispatch = useDispatch();
 
-  const token = useSelector(state => state.auth.token);
+  const token = useSelector((state) => state.auth.token);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [error, setError] = useState(false);
@@ -48,19 +49,23 @@ const AddTutoringScreen = props => {
         placeholder="Title"
         maxLength="20"
         required
-        onChangeText={value => setTitle(value)}
+        onChangeText={(value) => setTitle(value.trim())}
       />
       <TextInput
         style={styles.descriptionInput}
         placeholder="Description"
         multiline={true}
-        numberOfLines={4}
+        onSubmitEditing={() => {
+          Keyboard.dismiss();
+        }}
+        blurOnSubmit={true}
         maxLength="125"
         required
-        onChangeText={value => setDescription(value)}
+        onChangeText={(value) => setDescription(value.trim())}
       />
       <Button
-        title="Create"
+        title="Add"
+        disabled={title.length < 3 || description.length < 15}
         onPress={() => {
           props.navigation.goBack();
           addPostHandler();
@@ -72,37 +77,45 @@ const AddTutoringScreen = props => {
 
 const styles = StyleSheet.create({
   wrapper: {
+    flex: 1,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   titleInput: {
+    color: "#696969",
     paddingHorizontal: 2,
     paddingVertical: 5,
-    borderRadius: 10,
     textAlign: "center",
-    backgroundColor: "#F7F0FF",
-    marginTop: 10,
     height: 50,
     width: "80%",
-    fontSize: 20
+    fontSize: 20,
+    marginTop: 10,
+
+    borderBottomColor: "#FFD6C0",
+    borderColor: "#DB7093",
+    borderLeftWidth: 1,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderTopLeftRadius: 10,
+    borderBottomRightRadius: "500%",
   },
   descriptionInput: {
+    color: "#696969",
     paddingHorizontal: 2,
     paddingVertical: 5,
-    borderRadius: 10,
     textAlign: "center",
-    backgroundColor: "#F7F0FF",
-    marginTop: 10,
+    height: "40%",
     width: "80%",
-    fontSize: 23,
-    height: "40%"
-  }
-});
+    fontSize: 20,
 
-AddTutoringScreen.navigationOptions = navData => {
-  return {
-    header: null
-  };
-};
+    borderTopColor: "#FFD6C0",
+    borderColor: "#DB7093",
+    borderRightWidth: 1,
+    borderBottomWidth: 1,
+    borderTopWidth: 1,
+    borderBottomRightRadius: 10,
+    borderTopLeftRadius: "500%",
+  },
+});
 
 export default AddTutoringScreen;
