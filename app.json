@@ -4,8 +4,10 @@
     "description": "Have you ever needed help with a subject in college but couldn’t find a tutor? This app solves that problem! With people posting their information and what subject they want to teach. I think the UI is clean. I also implemented the search feature, I was going to use a library but decided against it so I can learn. https://github.com/randyarbolaez/tutoring-native",
     "slug": "tutoring-board",
     "privacy": "public",
-    "sdkVersion": "35.0.0",
-    "platforms": ["ios", "web"],
+    "platforms": [
+      "ios",
+      "web"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/splash.png",
@@ -16,7 +18,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     }

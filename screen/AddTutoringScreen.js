@@ -47,7 +47,7 @@ const AddTutoringScreen = (props) => {
       <TextInput
         style={styles.titleInput}
         placeholder="Title"
-        maxLength="20"
+        maxLength={20}
         required
         onChangeText={(value) => setTitle(value.trim())}
       />
@@ -59,7 +59,7 @@ const AddTutoringScreen = (props) => {
           Keyboard.dismiss();
         }}
         blurOnSubmit={true}
-        maxLength="125"
+        maxLength={125}
         required
         onChangeText={(value) => setDescription(value.trim())}
       />
@@ -97,7 +97,8 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 1,
     borderTopLeftRadius: 10,
-    borderBottomRightRadius: "500%",
+    //borderBottomRightRadius: "500%",
+    borderBottomRightRadius: 500,
   },
   descriptionInput: {
     color: "#696969",
@@ -114,7 +115,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderTopWidth: 1,
     borderBottomRightRadius: 10,
-    borderTopLeftRadius: "500%",
+    //borderTopLeftRadius: "500%",
+    borderTopLeftRadius: 500,
   },
 });
 

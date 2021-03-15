@@ -31,7 +31,7 @@ const Post = () => {
       onRefresh={loadPosts}
       refreshing={isRefreshing}
       data={posts}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item) => item._id}
       renderItem={(itemData) => {
         return (
           <PostCard
