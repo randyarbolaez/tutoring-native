@@ -28,7 +28,7 @@ const TutoringScreen = (props) => {
     } catch (err) {
       console.log(err.message);
     }
-    setIsRefreshing(false);
+    // setIsRefreshing(false);
   }, [dispatch]);
 
   const onInputChangeHandler = async (value) => {
@@ -71,12 +71,15 @@ const TutoringScreen = (props) => {
 TutoringScreen.navigationOptions = (navData) => {
   const logout = navData.navigation.getParam("logout");
   return {
-    title: "Tutoring Board",
+    headerStyle:{
+      borderBottomWidth:0,
+      backgroundColor:"#F7934C",
+    },
     headerRight: (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
         <Item
           title="Add Post"
-          iconName={Platform.OS === "android" ? "md-add" : "ios-add"}
+          iconName={Platform.OS === "android" ? "md-add" : "md-add"}
           onPress={() => {
             navData.navigation.navigate("AddTutoring");
           }}
@@ -87,7 +90,7 @@ TutoringScreen.navigationOptions = (navData) => {
       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
         <Item
           title="Logout"
-          iconName={Platform.OS === "android" ? "md-log-out" : "ios-log-out"}
+          iconName={Platform.OS === "android" ? "md-log-out" : "md-log-out"}
           onPress={() => {
             logout();
           }}
@@ -102,16 +105,22 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "center",
     paddingBottom: "7%",
+    backgroundColor:'#F7934C',
   },
   container: {
     height: "97%",
   },
   input: {
-    marginTop: 25,
+    marginLeft:"5%",
+    marginRight:"5%",
+    marginTop: "5%",
+    marginBottom: "1.5%",
     fontSize: 20,
     textAlign: "center",
     height: 50,
-    color: "#DC143C",
+    color: "#1F1300",
+    borderBottomColor:"#F8F7FF",
+    borderBottomWidth:2,
   },
 });
 

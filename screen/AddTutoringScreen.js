@@ -9,7 +9,9 @@ import {
   Keyboard,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
+import CustomHeaderButton from "../components/CustomHeaderButton";
 import * as postActions from "../store/actions/post-actions";
 
 const AddTutoringScreen = (props) => {
@@ -26,7 +28,7 @@ const AddTutoringScreen = (props) => {
     } catch (err) {
       console.log(err.message);
     }
-    setIsRefreshing(false);
+    // setIsRefreshing(false);
   }, [dispatch]);
 
   const addPostHandler = async () => {
@@ -44,35 +46,60 @@ const AddTutoringScreen = (props) => {
 
   return (
     <View style={styles.wrapper}>
-      <TextInput
-        style={styles.titleInput}
-        placeholder="Title"
-        maxLength={20}
-        required
-        onChangeText={(value) => setTitle(value.trim())}
-      />
-      <TextInput
-        style={styles.descriptionInput}
-        placeholder="Description"
-        multiline={true}
-        onSubmitEditing={() => {
-          Keyboard.dismiss();
-        }}
-        blurOnSubmit={true}
-        maxLength={125}
-        required
-        onChangeText={(value) => setDescription(value.trim())}
-      />
-      <Button
-        title="Add"
-        disabled={title.length < 3 || description.length < 15}
-        onPress={() => {
-          props.navigation.goBack();
-          addPostHandler();
-        }}
-      />
+      
+      <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
+        <TextInput
+          style={styles.titleInput}
+          placeholder="Title"
+          maxLength={20}
+          required
+          onChangeText={(value) => setTitle(value.trim())}
+        />
+        <TextInput
+          style={styles.descriptionInput}
+          placeholder="Description"
+          multiline={true}
+          onSubmitEditing={() => {
+            Keyboard.dismiss();
+          }}
+          blurOnSubmit={true}
+          maxLength={125}
+          required
+          onChangeText={(value) => setDescription(value.trim())}
+        />
+        <Button
+          title="Add"
+          color={"#F7934C"}
+          disabled={title.length < 3 || description.length < 15}
+          onPress={() => {
+            props.navigation.goBack();
+            addPostHandler();
+          }}
+        />
+      </KeyboardAvoidingView>
+      
     </View>
   );
+};
+
+AddTutoringScreen.navigationOptions = (navData) => {
+  return {
+    headerStyle:{
+      borderBottomWidth:0,
+      backgroundColor:"#F7934C",
+    },
+    headerLeft: (
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+        <Item
+          title="Logout"
+          iconName={Platform.OS === "android" ? "md-log-out" : "md-arrow-round-back"}
+          onPress={() => {
+            navData.navigation.goBack();
+          }}
+        />
+      </HeaderButtons>
+    ),
+  };
 };
 
 const styles = StyleSheet.create({
@@ -80,6 +107,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor:'#F7934C',
+  },
+  container:{
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor:'#F8F7FF',
+    width:"90%",
+    height:"60%",
+    borderRadius:25,
   },
   titleInput: {
     color: "#696969",
@@ -89,34 +125,26 @@ const styles = StyleSheet.create({
     height: 50,
     width: "80%",
     fontSize: 20,
-    marginTop: 10,
-
-    borderBottomColor: "#FFD6C0",
-    borderColor: "#DB7093",
-    borderLeftWidth: 1,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderTopLeftRadius: 10,
-    //borderBottomRightRadius: "500%",
-    borderBottomRightRadius: 500,
+    marginBottom:5,
+    
+    borderWidth:2,
+    borderColor:"transparent",
+    borderBottomColor: "#F7934C",
+    borderBottomColor: "#FFD5C2",
   },
   descriptionInput: {
     color: "#696969",
     paddingHorizontal: 2,
     paddingVertical: 5,
     textAlign: "center",
-    height: "40%",
     width: "80%",
     fontSize: 20,
+    marginTop:25,
+    marginBottom:15,
 
-    borderTopColor: "#FFD6C0",
-    borderColor: "#DB7093",
-    borderRightWidth: 1,
-    borderBottomWidth: 1,
-    borderTopWidth: 1,
-    borderBottomRightRadius: 10,
-    //borderTopLeftRadius: "500%",
-    borderTopLeftRadius: 500,
+    borderWidth:2,
+    borderColor:"transparent",
+    borderBottomColor: "#FFD5C2", 
   },
 });
 

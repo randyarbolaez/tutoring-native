@@ -28,7 +28,8 @@ export default (state = initialState, action) => {
     case DELETE_POST:
       return {
         ...state,
-        searchPosts: state.searchPosts.filter(post => post.id !== action.postId)
+        searchPosts: state.searchPosts.filter(post => post.id !== action.postId),
+        allPosts: state.allPosts.filter(post => post.id !== action.postId)
       };
     case SEARCH_POSTS:
       return {
