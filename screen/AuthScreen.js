@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   Alert,
   TextInput,
+  TouchableOpacity
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useDispatch } from "react-redux";
@@ -54,15 +55,27 @@ const AuthScreen = (props) => {
 
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.screen}>
-      <LinearGradient
-        colors={isSignup ? ["#FF99C8", "#E4C1F9"] : ["#EE82EE", "#DC143C"]}
-        style={styles.gradient}
-      >
+        <Text style={styles.title}>
+          {isSignup ? "Hello, Sign up!" : "Welcome back!"}
+        </Text>
         <View style={styles.container}>
-          <Text style={styles.title}>
-            {isSignup ? "Welcome,    Sign Up" : "Welcome Back, Login"}
-          </Text>
-          <View>
+          <View style={styles.buttonWrapper}>
+            <View>
+            <TouchableOpacity style={styles.buttonContainer} onPress={() => {
+                  setIsSignup(true);
+                }}>
+              <Text style={{...styles.buttonText,color:`${isSignup ? '#1F1300':'#D3D3D3'}`}}>Sign Up</Text>
+            </TouchableOpacity>
+            </View>
+            <View>
+            <TouchableOpacity style={styles.buttonContainer} onPress={() => {
+                  setIsSignup(false);
+                }}>
+              <Text style={{...styles.buttonText,color:`${!isSignup ? '#1F1300':'#D3D3D3'}`}}>Sign In</Text>
+            </TouchableOpacity>
+            </View>
+          </View>
+          <View style={styles.inputWrapper}>
             <TextInput
               style={styles.input}
               placeholder="Username"
@@ -90,28 +103,15 @@ const AuthScreen = (props) => {
               onChangeText={(value) => setPassword(value)}
               initialValue=""
             />
-            <View style={styles.buttonWrapper}>
-              <View style={styles.buttonContainer}>
-                {isLoading ? (
-                  <ActivityIndicator size="small" color={Colors.primary} />
-                ) : (
-                  <Button
-                    title={isSignup ? "Sign Up" : "Login"}
-                    disabled={username.length < 3 || password.length < 3}
-                    color={Colors.accentColor}
-                    onPress={authHandler}
-                  />
-                )}
-              </View>
-              <View style={styles.buttonContainer}>
-                <Button
-                  title={`Switch to ${isSignup ? "Login" : "Sign Up"}`}
-                  color={Colors.accentColor}
-                  onPress={() => {
-                    setIsSignup((prevState) => !prevState);
-                  }}
-                />
-              </View>
+            <View>
+                <TouchableOpacity style={username.length < 3 || password.length < 3 ? styles.submitButtonContainerDisabled : styles.submitButtonContainer} 
+                onPress={authHandler}
+                // onPress={() =>{console.log('sign up')}}
+                disabled={username.length < 3 || password.length < 3}
+                >
+                  <Text style={username.length < 3 || password.length < 3 ? styles.submitButtonTextDisabled : styles.submitButtonText}
+                  >{isSignup ? "Sign Up" : "Sign In"}</Text>
+                </TouchableOpacity>
             </View>
             {error && (
               <Text
@@ -127,7 +127,6 @@ const AuthScreen = (props) => {
             )}
           </View>
         </View>
-      </LinearGradient>
     </KeyboardAvoidingView>
   );
 };
@@ -135,45 +134,42 @@ const AuthScreen = (props) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-  },
-  gradient: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent:'center',
+    alignContent:'center',
+    backgroundColor:'#F7F0FF',
   },
   title: {
+    paddingVertical:"10%",
+    marginTop:'75%',
     textAlign: "center",
-    fontSize: 36.8,
+    fontSize: 40,
     fontWeight: "bold",
-    color: "#FCF6BD",
+    color: "#F7934C",
   },
-  container: {
-    // transform: [{ rotate: "11deg" }],
-    width: "80%",
-    maxWidth: 400,
-    maxHeight: 400,
-    padding: 20,
-    borderRadius: 10,
-    shadowRadius: 8,
-    shadowColor: "#CCCCCC",
-    shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
+  container:{
+    justifyContent:'space-between',
+    height:'55%',
+    paddingTop:"5%",
+    paddingBottom:"22%",
+    backgroundColor:'#F7934C',
+    borderRadius:25,
   },
   buttonWrapper: {
-    display: "flex",
     flexDirection: "row",
-    textAlign: "center",
     justifyContent: "center",
   },
-  buttonContainer: {
-    marginTop: 10,
-    // borderRadius: 50,
-    // paddingHorizontal: 1,
-    // paddingVertical: 3,
-    // borderLeftWidth: 1,
-    // borderBottomWidth: 1,
-    // borderRightWidth: 1,
-    // backgroundColor: "#F7F0FF"
+  buttonContainer:{
+    marginHorizontal:10,
+    borderBottomWidth: 3,
+    borderBottomColor:"#F8F7FF",
+  },
+  buttonText: {
+    fontSize:20,
+    fontWeight:'600',
+    paddingBottom:7,
+  },
+  inputWrapper:{
+    marginTop:'8%'
   },
   input: {
     paddingHorizontal: 2,
@@ -184,6 +180,32 @@ const styles = StyleSheet.create({
     marginTop: 10,
     height: 50,
     fontSize: 20,
+    marginHorizontal:10,
+  },
+  submitButtonContainer:{
+    marginTop:'10%',
+    alignItems:'center',
+    borderBottomWidth:4,
+    borderBottomColor:"#CC5803",
+    marginHorizontal:"32%",
+    borderRadius:50
+  },
+  submitButtonText:{
+    fontSize: 24,
+    color:"#F8F7FF",
+  },
+  submitButtonContainerDisabled:{
+    marginTop:'10%',
+    alignItems:'center',
+    borderBottomWidth:4,
+    borderBottomColor:"#CC5803",
+    marginHorizontal:"32%",
+    borderRadius:50
+  },
+  submitButtonTextDisabled:{
+    fontSize:28,
+    color:"#D3D3D3",
+    paddingBottom:"3%",
   },
   errorText: {
     textAlign: "center",
@@ -195,7 +217,6 @@ const styles = StyleSheet.create({
 AuthScreen.navigationOptions = (navData) => {
   return {
     header: null,
-    // headerTitle: isSignup ? "Sign Up" : "Login"
   };
 };
 

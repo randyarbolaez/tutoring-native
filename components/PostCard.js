@@ -67,23 +67,28 @@ const PostCard = (props) => {
       } 
       delayLongPress={300}
       >
-      <Text style={styles.title}>{props.title}</Text>
+      <View style={styles.title}>
+        <Text style={{fontSize: 20}}>{props.title}</Text>
+      </View>
       <Text style={styles.description}>{props.description}</Text>
       <View style={{...styles.dateMade, 
         borderColor:'#ce2029',
         borderBottomWidth:"4",}}
       >
-      <Text style={styles.dateMade}>{`${month} ${day}, ${year}`}</Text>
+        <Text>{`${month} ${day}, ${year}`}</Text>
       </View>
     </TouchableOpacity>
     ): (<View style={styles.wrapper}> 
-    <Text style={styles.title}>{props.title}</Text>
+    <View style={styles.title}>
+        <Text style={{fontSize: 20}}>{props.title}</Text>
+      </View>
     <Text style={styles.description}>{props.description}</Text>
     <View style={styles.dateMade}>
       <Text >{`${month} ${day}, ${year}`}</Text>
     </View>
     
-    </View>)}
+    </View>
+    )}
     </>
   );
 };
@@ -93,24 +98,6 @@ const styles = StyleSheet.create({
     backgroundColor:"#F8F7FF",
     margin:"4%",
     borderRadius:10,
-    // height:50,
-    // margin: "2% 2%",
-    //boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)",
-    // borderTopEndRadius: "20%",
-    // borderTopEndRadius:20,
-    // borderColor: "#DB7093",
-    // borderWidth: 1,
-    // borderBottomColor: "#FFD6C0",
-    // borderBottomWidth: 1,
-    // borderRightColor: "#FFD6C0",
-    // borderRightWidth: 1,
-    // borderTopStartRadius: "10%",
-    // borderTopStartRadius: 10,
-    //borderBottomStartRadius: "25%",
-    //borderBottomEndRadius: "10%",
-    // borderBottomStartRadius: 25,
-    // borderBottomEndRadius: 10,
-    // padding: "4%",
   },
   title: {
     paddingTop:"3%",
@@ -118,6 +105,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#DB7093",
     color: "#1F1300",
+    borderBottomColor:"#F7934C",
+    borderBottomWidth:2,
+    alignItems:'center',
+    marginLeft:'20%',
+    marginRight:'20%',
+    paddingBottom:10,
   },
   description: {
     textAlign: "center",
