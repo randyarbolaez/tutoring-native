@@ -6,10 +6,12 @@ import ReduxThunk from "redux-thunk";
 import NavigationContainer from "./navigation/NavigationContainer";
 import authReducer from "./store/reducers/auth-reducer";
 import postsReducer from "./store/reducers/post-reducer";
+import bookmarkReducer from "./store/reducers/bookmark-reducer";
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  post: postsReducer
+  post: postsReducer,
+  bookmark: bookmarkReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));

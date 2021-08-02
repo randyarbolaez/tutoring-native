@@ -71,9 +71,9 @@ const TutoringScreen = (props) => {
 TutoringScreen.navigationOptions = (navData) => {
   const logout = navData.navigation.getParam("logout");
   return {
-    headerStyle:{
-      borderBottomWidth:0,
-      backgroundColor:"#F7934C",
+    headerStyle: {
+      borderBottomWidth: 0,
+      backgroundColor: "#F7934C",
     },
     headerRight: (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
@@ -105,22 +105,22 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "center",
     paddingBottom: "7%",
-    backgroundColor:'#F7934C',
+    backgroundColor: "#F7934C",
   },
   container: {
     height: "97%",
   },
   input: {
-    marginLeft:"5%",
-    marginRight:"5%",
+    marginLeft: "5%",
+    marginRight: "5%",
     marginTop: "5%",
     marginBottom: "1.5%",
     fontSize: 20,
     textAlign: "center",
     height: 50,
     color: "#1F1300",
-    borderBottomColor:"#F8F7FF",
-    borderBottomWidth:2,
+    borderBottomColor: "#F8F7FF",
+    borderBottomWidth: 2,
   },
 });
 
