@@ -6,9 +6,12 @@ import {
   TextInput,
   StyleSheet,
   Platform,
+  Animated,
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useDispatch, useSelector } from "react-redux";
+import { RectButton, Swipeable } from "react-native-gesture-handler";
+// import Swipeable from "react-native-gesture-handler/Swipeable";
 
 import CustomHeaderButton from "../components/CustomHeaderButton";
 import Post from "../components/Post";
@@ -50,6 +53,32 @@ const TutoringScreen = (props) => {
     });
   }, [dispatch]);
 
+  const renderLeftActions = (progress, dragX) => {
+    const trans = dragX.interpolate({
+      inputRange: [0, 50, 100, 101],
+      outputRange: [-20, 0, 0, 1],
+    });
+    return (
+      <RectButton
+        style={styles.leftAction}
+        onPress={() => {
+          console.log("hello");
+        }}
+      >
+        <Animated.Text
+          style={[
+            styles.actionText,
+            {
+              transform: [{ translateX: trans }],
+            },
+          ]}
+        >
+          Archive
+        </Animated.Text>
+      </RectButton>
+    );
+  };
+
   return (
     <View style={styles.wrapper}>
       <TextInput
@@ -61,6 +90,9 @@ const TutoringScreen = (props) => {
         }}
         placeholder="Search"
       />
+      <Swipeable renderLeftActions={renderLeftActions}>
+        <Text>hello</Text>
+      </Swipeable>
       <View style={styles.container}>
         <Post />
       </View>

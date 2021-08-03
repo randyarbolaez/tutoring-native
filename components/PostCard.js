@@ -58,7 +58,12 @@ const PostCard = (props) => {
     <>
       {props.user === props.currentUser.userId ? (
         <TouchableOpacity
-          style={{ ...styles.wrapper }}
+          style={{
+            ...styles.wrapper,
+            borderColor: "#ce2029",
+            borderWidth: "4",
+            borderBottomWidth: "0",
+          }}
           onLongPress={() => {
             Alert.alert(
               "Are you sure you want to delete this post?",
@@ -92,8 +97,6 @@ const PostCard = (props) => {
           <View
             style={{
               ...styles.dateMade,
-              borderColor: "#ce2029",
-              borderBottomWidth: "4",
             }}
           >
             <Text>{`${month} ${day}, ${year}`}</Text>
